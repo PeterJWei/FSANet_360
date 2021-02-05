@@ -96,6 +96,10 @@ def main():
 		image, pose = load_data_npz('../data/ExtraPose.npz')
 		x_data = image
 		y_data = pose
+	elif db_name == 'Hospital_Orientation':
+		image, pose = load_data_npz('../data/Hospital_Orientation.npz')
+		x_data = image
+		y_data = pose
 	elif db_name == 'ExtraPosePlus':
 		image, pose = load_data_npz('../data/ExtraPosePlus.npz')
 		x_data = image

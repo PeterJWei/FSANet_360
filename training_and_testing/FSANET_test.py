@@ -22,10 +22,12 @@ import TYY_callbacks
 from TYY_generators import *
 
 _TRAIN_DB_300W_LP = "300W_LP"
-_TRAIN_DB_BIWI = "BIWI"
+_TRAIN_DB_EXTRAPOSE = "ExtraPosePlus"
+_TRAIN_DB_HOSPITAL = "Hospital_Orientation"
 
 _TEST_DB_AFLW = "AFLW2000"
 _TEST_DB_BIWI = "BIWI"
+_TEST_DB_HOSPITAL = "Hospital_Orientation_Test"
 
 _IMAGE_SIZE = 64
 
@@ -51,9 +53,9 @@ def get_args():
     parser.add_argument('--use_pretrained', required=False,
                         dest='use_pretrained',
                         action='store_true')
-    parser.add_argument("--train_db", choices=[_TRAIN_DB_300W_LP, _TRAIN_DB_BIWI], required=False, default=_TRAIN_DB_300W_LP)
+    parser.add_argument("--train_db", choices=[_TRAIN_DB_300W_LP, _TRAIN_DB_EXTRAPOSE, _TRAIN_DB_HOSPITAL], required=False, default=_TRAIN_DB_300W_LP)
 
-    parser.set_defaults(use_pretrained=False)
+    parser.set_defaults(use_pretrained=True)
 
     args = parser.parse_args()
     return args
@@ -69,10 +71,12 @@ def main():
     use_pretrained = args.use_pretrained   
     
 
-    if train_db_name == _TRAIN_DB_300W_LP:
-        test_db_list = [_TEST_DB_AFLW, _TEST_DB_BIWI]
-    elif train_db_name == _TRAIN_DB_BIWI:
-        test_db_list = [_TEST_DB_BIWI]
+    # if train_db_name == _TRAIN_DB_300W_LP:
+    #     test_db_list = [_TEST_DB_AFLW, _TEST_DB_BIWI]
+    # elif train_db_name == _TRAIN_DB_BIWI:
+    #     test_db_list = [_TEST_DB_BIWI]
+    
+    test_db_list = [_TEST_DB_HOSPITAL]
 
     for test_db_name in test_db_list:
 
@@ -83,6 +87,8 @@ def main():
                 image, pose = load_data_npz('../data/BIWI_noTrack.npz')
             elif train_db_name == _TRAIN_DB_BIWI:
                 image, pose = load_data_npz('../data/BIWI_test.npz')
+        elif test_db_name == _TEST_DB_HOSPITAL:
+            image, pose = load_data_npz('../data/Hospital_Orientation_Test.npz')
         
         if train_db_name == _TRAIN_DB_300W_LP:
             # we only care the angle between [-99,99] and filter other angles
@@ -440,15 +446,21 @@ def main():
             outputs = Average()([x1,x2,x3])
             model = Model(inputs=inputs,outputs=outputs)
 
+        print('\033[94m' + 'x_data' + '\033[0m')
+        print(x_data)
         p_data = model.predict(x_data)
+        print('\033[93m' + 'p_data' + '\033[0m')
+        print(p_data)
+        print('\033[92m' + 'y_data' + '\033[0m')
+        print(y_data)
         pose_matrix = np.mean(np.abs(p_data-y_data),axis=0)
         MAE = np.mean(pose_matrix)
         yaw = pose_matrix[0]
         pitch = pose_matrix[1]
         roll = pose_matrix[2]
-        print('\n--------------------------------------------------------------------------------')
-        print(save_name+', '+test_db_name+'('+train_db_name+')'+', MAE = %3.3f, [yaw,pitch,roll] = [%3.3f, %3.3f, %3.3f]'%(MAE, yaw, pitch, roll))
-        print('--------------------------------------------------------------------------------')
+        print('\033[92m' + '\n--------------------------------------------------------------------------------' + '\033[0m')
+        print('\033[92m' + save_name+', '+test_db_name+'('+train_db_name+')'+', MAE = %3.3f, [yaw,pitch,roll] = [%3.3f, %3.3f, %3.3f]'%(MAE, yaw, pitch, roll) + '\033[0m')
+        print('\033[92m' + '--------------------------------------------------------------------------------' + '\033[0m')
 
 if __name__ == '__main__':    
     main()

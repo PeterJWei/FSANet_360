@@ -1,24 +1,24 @@
 # Train on protocal 1 Extra Pose Plus DS
 # SSRNET_MT
-KERAS_BACKEND=tensorflow python FSANET_train.py --batch_size 8 --nb_epochs 5 --model_type 0 --db_name 'ExtraPose'
-KERAS_BACKEND=tensorflow python FSANET_train.py --batch_size 8 --nb_epochs 5 --model_type 1 --db_name 'ExtraPose'
+KERAS_BACKEND=tensorflow python FSANET_train.py --batch_size 8 --nb_epochs 5 --model_type 0 --db_name 'Hospital_Orientation'
+KERAS_BACKEND=tensorflow python FSANET_train.py --batch_size 8 --nb_epochs 5 --model_type 1 --db_name 'Hospital_Orientation'
  
 # FSANET_Capsule
-KERAS_BACKEND=tensorflow python FSANET_train.py --batch_size 16 --nb_epochs 5 --model_type 2 --db_name 'ExtraPose'
-KERAS_BACKEND=tensorflow python FSANET_train.py --batch_size 16 --nb_epochs 5 --model_type 3 --db_name 'ExtraPose'
-KERAS_BACKEND=tensorflow python FSANET_train.py --batch_size 16 --nb_epochs 5 --model_type 4 --db_name 'ExtraPose'
+KERAS_BACKEND=tensorflow python FSANET_train.py --batch_size 16 --nb_epochs 5 --model_type 2 --db_name 'Hospital_Orientation'
+KERAS_BACKEND=tensorflow python FSANET_train.py --batch_size 16 --nb_epochs 5 --model_type 3 --db_name 'Hospital_Orientation'
+KERAS_BACKEND=tensorflow python FSANET_train.py --batch_size 16 --nb_epochs 5 --model_type 4 --db_name 'Hospital_Orientation'
 
 
 # FSANET_Netvlad
-KERAS_BACKEND=tensorflow python FSANET_train.py --batch_size 16 --nb_epochs 5 --model_type 5 --db_name 'ExtraPose'
-KERAS_BACKEND=tensorflow python FSANET_train.py --batch_size 16 --nb_epochs 5 --model_type 6 --db_name 'ExtraPose'
-KERAS_BACKEND=tensorflow python FSANET_train.py --batch_size 16 --nb_epochs 5 --model_type 7 --db_name 'ExtraPose'
+KERAS_BACKEND=tensorflow python FSANET_train.py --batch_size 16 --nb_epochs 5 --model_type 5 --db_name 'Hospital_Orientation'
+KERAS_BACKEND=tensorflow python FSANET_train.py --batch_size 16 --nb_epochs 5 --model_type 6 --db_name 'Hospital_Orientation'
+KERAS_BACKEND=tensorflow python FSANET_train.py --batch_size 16 --nb_epochs 5 --model_type 7 --db_name 'Hospital_Orientation'
 
 
 # FSANET_Metric
-KERAS_BACKEND=tensorflow python FSANET_train.py --batch_size 16 --nb_epochs 5 --model_type 8 --db_name 'ExtraPose'
-KERAS_BACKEND=tensorflow python FSANET_train.py --batch_size 16 --nb_epochs 5 --model_type 9 --db_name 'ExtraPose'
-KERAS_BACKEND=tensorflow python FSANET_train.py --batch_size 16 --nb_epochs 5 --model_type 10 --db_name 'ExtraPose'
+KERAS_BACKEND=tensorflow python FSANET_train.py --batch_size 16 --nb_epochs 5 --model_type 8 --db_name 'Hospital_Orientation'
+KERAS_BACKEND=tensorflow python FSANET_train.py --batch_size 16 --nb_epochs 5 --model_type 9 --db_name 'Hospital_Orientation'
+KERAS_BACKEND=tensorflow python FSANET_train.py --batch_size 16 --nb_epochs 5 --model_type 10 --db_name 'Hospital_Orientation'
 
 
 
