@@ -100,6 +100,30 @@ def main():
 		image, pose = load_data_npz('../data/Hospital_Orientation.npz')
 		x_data = image
 		y_data = pose
+
+	# data stored in google drive
+	elif db_name == 'Hospital':
+		image, pose = load_data_npz('/content/drive/MyDrive/Columbia U/Advanced Project/Orientation NPZ/Hospital.npz')
+		x_data = image
+		y_data = pose
+	elif db_name == '300WLP_ExtraPosePlus':
+		image, pose = load_data_npz('/content/drive/MyDrive/Columbia U/Advanced Project/Orientation NPZ/300WLP_ExtraPosePlus.npz')
+		x_data = image
+		y_data = pose
+	elif db_name == '300WLP_Hospital':
+		image, pose = load_data_npz('/content/drive/MyDrive/Columbia U/Advanced Project/Orientation NPZ/300WLP_Hospital.npz')
+		x_data = image
+		y_data = pose
+	elif db_name == 'ExtraPosePlus_Hospital':
+		image, pose = load_data_npz('/content/drive/MyDrive/Columbia U/Advanced Project/Orientation NPZ/ExtraPosePlus_Hospital.npz')
+		x_data = image
+		y_data = pose
+	elif db_name == '300WLP_ExtraPosePlus_Hospital':
+		image, pose = load_data_npz('/content/drive/MyDrive/Columbia U/Advanced Project/Orientation NPZ/300WLP_ExtraPosePlus_Hospital.npz')
+		x_data = image
+		y_data = pose
+
+
 	elif db_name == 'ExtraPosePlus':
 		image, pose = load_data_npz('../data/ExtraPosePlus.npz')
 		x_data = image

@@ -23,11 +23,15 @@ from TYY_generators import *
 
 _TRAIN_DB_300W_LP = "300W_LP"
 _TRAIN_DB_EXTRAPOSE = "ExtraPosePlus"
-_TRAIN_DB_HOSPITAL = "Hospital_Orientation"
+_TRAIN_DB_HOSPITAL = "Hospital"
+_TRAIN_DB_300W_LP_EXTRAPOSE = "300WLP_ExtraPosePlus"
+_TRAIN_DB_300W_LP_HOSPITAL = "300WLP_Hospital"
+_TRAIN_DB_EXTRAPOSE_HOSPITAL = "ExtraPosePlus_Hospital"
+_TRAIN_DB_300W_LP_EXTRAPOSE_HOSPITAL = "300WLP_ExtraPosePlus_Hospital"
 
 _TEST_DB_AFLW = "AFLW2000"
 _TEST_DB_BIWI = "BIWI"
-_TEST_DB_HOSPITAL = "Hospital_Orientation_Test"
+_TEST_DB_HOSPITAL = "Hospital_Test"
 
 _IMAGE_SIZE = 64
 
@@ -55,7 +59,7 @@ def get_args():
                         action='store_true')
     parser.add_argument("--train_db", choices=[_TRAIN_DB_300W_LP, _TRAIN_DB_EXTRAPOSE, _TRAIN_DB_HOSPITAL], required=False, default=_TRAIN_DB_300W_LP)
 
-    parser.set_defaults(use_pretrained=True)
+    parser.set_defaults(use_pretrained=True) # models to use should be stored in "pre-trained" folder
 
     args = parser.parse_args()
     return args
@@ -88,7 +92,7 @@ def main():
             elif train_db_name == _TRAIN_DB_BIWI:
                 image, pose = load_data_npz('../data/BIWI_test.npz')
         elif test_db_name == _TEST_DB_HOSPITAL:
-            image, pose = load_data_npz('../data/Hospital_Orientation_Test.npz')
+            image, pose = load_data_npz('/content/drive/MyDrive/Columbia U/Advanced Project/Orientation NPZ/Hospital_Test.npz')
         
         if train_db_name == _TRAIN_DB_300W_LP:
             # we only care the angle between [-99,99] and filter other angles
