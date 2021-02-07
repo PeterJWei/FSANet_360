@@ -57,7 +57,7 @@ def get_args():
     parser.add_argument('--use_pretrained', required=False,
                         dest='use_pretrained',
                         action='store_true')
-    parser.add_argument("--train_db", choices=[_TRAIN_DB_300W_LP, _TRAIN_DB_EXTRAPOSE, _TRAIN_DB_HOSPITAL], required=False, default=_TRAIN_DB_300W_LP)
+    parser.add_argument("--train_db", choices=[_TRAIN_DB_300W_LP, _TRAIN_DB_EXTRAPOSE, _TRAIN_DB_HOSPITAL, _TRAIN_DB_300W_LP_EXTRAPOSE, _TRAIN_DB_300W_LP_HOSPITAL, _TRAIN_DB_EXTRAPOSE_HOSPITAL, _TRAIN_DB_300W_LP_EXTRAPOSE_HOSPITAL], required=False, default=_TRAIN_DB_300W_LP)
 
     parser.set_defaults(use_pretrained=True) # models to use should be stored in "pre-trained" folder
 
