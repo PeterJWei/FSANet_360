@@ -28,10 +28,13 @@ _TRAIN_DB_300W_LP_EXTRAPOSE = "300WLP_ExtraPosePlus"
 _TRAIN_DB_300W_LP_HOSPITAL = "300WLP_Hospital"
 _TRAIN_DB_EXTRAPOSE_HOSPITAL = "ExtraPosePlus_Hospital"
 _TRAIN_DB_300W_LP_EXTRAPOSE_HOSPITAL = "300WLP_ExtraPosePlus_Hospital"
+_TRAIN_DB_HOSPITAL_NEW = "Hospital_New"
+_TRAIN_DB_300W_LP_HOSPITAL_NEW = "300WLP_Hospital_New"
 
 _TEST_DB_AFLW = "AFLW2000"
 _TEST_DB_BIWI = "BIWI"
 _TEST_DB_HOSPITAL = "Hospital_Test"
+_TEST_DB_HOSPITAL_NEW = "Hospital_New_Test"
 
 _IMAGE_SIZE = 64
 
@@ -57,7 +60,7 @@ def get_args():
     parser.add_argument('--use_pretrained', required=False,
                         dest='use_pretrained',
                         action='store_true')
-    parser.add_argument("--train_db", choices=[_TRAIN_DB_300W_LP, _TRAIN_DB_EXTRAPOSE, _TRAIN_DB_HOSPITAL, _TRAIN_DB_300W_LP_EXTRAPOSE, _TRAIN_DB_300W_LP_HOSPITAL, _TRAIN_DB_EXTRAPOSE_HOSPITAL, _TRAIN_DB_300W_LP_EXTRAPOSE_HOSPITAL], required=False, default=_TRAIN_DB_300W_LP)
+    parser.add_argument("--train_db", choices=[_TRAIN_DB_300W_LP, _TRAIN_DB_EXTRAPOSE, _TRAIN_DB_HOSPITAL, _TRAIN_DB_300W_LP_EXTRAPOSE, _TRAIN_DB_300W_LP_HOSPITAL, _TRAIN_DB_EXTRAPOSE_HOSPITAL, _TRAIN_DB_300W_LP_EXTRAPOSE_HOSPITAL, _TRAIN_DB_HOSPITAL_NEW, _TRAIN_DB_300W_LP_HOSPITAL_NEW], required=False, default=_TRAIN_DB_300W_LP)
 
     parser.set_defaults(use_pretrained=True) # models to use should be stored in "pre-trained" folder
 
@@ -80,7 +83,7 @@ def main():
     # elif train_db_name == _TRAIN_DB_BIWI:
     #     test_db_list = [_TEST_DB_BIWI]
     
-    test_db_list = [_TEST_DB_HOSPITAL]
+    test_db_list = [_TEST_DB_HOSPITAL_NEW]
 
     for test_db_name in test_db_list:
 
@@ -93,6 +96,8 @@ def main():
                 image, pose = load_data_npz('../data/BIWI_test.npz')
         elif test_db_name == _TEST_DB_HOSPITAL:
             image, pose = load_data_npz('/content/drive/MyDrive/Columbia U/Advanced Project/Orientation NPZ/Hospital_Test.npz')
+        elif test_db_name == _TEST_DB_HOSPITAL_NEW:
+            image, pose = load_data_npz('/content/drive/MyDrive/Columbia U/Advanced Project/Orientation NPZ/Hospital_New_Test.npz')
         
         if train_db_name == _TRAIN_DB_300W_LP:
             # we only care the angle between [-99,99] and filter other angles

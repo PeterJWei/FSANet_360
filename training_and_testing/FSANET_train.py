@@ -122,6 +122,14 @@ def main():
 		image, pose = load_data_npz('/content/drive/MyDrive/Columbia U/Advanced Project/Orientation NPZ/300WLP_ExtraPosePlus_Hospital.npz')
 		x_data = image
 		y_data = pose
+	elif db_name == 'Hospital_New':
+		image, pose = load_data_npz('/content/drive/MyDrive/Columbia U/Advanced Project/Orientation NPZ/Hospital_New.npz')
+		x_data = image
+		y_data = pose
+	elif db_name == '300WLP_Hospital_New':
+		image, pose = load_data_npz('/content/drive/MyDrive/Columbia U/Advanced Project/Orientation NPZ/300WLP_Hospital_New.npz')
+		x_data = image
+		y_data = pose
 
 
 	elif db_name == 'ExtraPosePlus':
