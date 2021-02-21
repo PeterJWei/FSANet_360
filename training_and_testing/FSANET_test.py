@@ -83,7 +83,7 @@ def main():
     # elif train_db_name == _TRAIN_DB_BIWI:
     #     test_db_list = [_TEST_DB_BIWI]
     
-    test_db_list = [_TEST_DB_HOSPITAL_NEW]
+    test_db_list = [_TEST_DB_HOSPITAL, _TEST_DB_HOSPITAL_NEW]
 
     for test_db_name in test_db_list:
 
@@ -476,7 +476,7 @@ def main():
         # pose = np.delete(pose, delete_index, 0)
         # np.savez(test_db_name + '_filtered.npz', image=np.array(image), pose=np.array(pose), img_size=64)
 
-        
+        print('\nNumber of heads tested: ', len(y_data))
         print('\033[92m' + '\n--------------------------------------------------------------------------------' + '\033[0m')
         print('\033[92m' + save_name+', '+test_db_name+'('+train_db_name+')'+', MAE = %3.3f, [yaw,pitch,roll] = [%3.3f, %3.3f, %3.3f]'%(MAE, yaw, pitch, roll) + '\033[0m')
         print('\033[92m' + '--------------------------------------------------------------------------------' + '\033[0m')
