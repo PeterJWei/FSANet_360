@@ -95,9 +95,11 @@ def main():
             elif train_db_name == _TRAIN_DB_BIWI:
                 image, pose = load_data_npz('../data/BIWI_test.npz')
         elif test_db_name == _TEST_DB_HOSPITAL:
-            image, pose = load_data_npz('/content/drive/MyDrive/Columbia U/Advanced Project/Orientation NPZ/Hospital_Test.npz')
+            # image, pose = load_data_npz('/content/drive/MyDrive/Columbia U/Advanced Project/Orientation NPZ/Hospital_Test.npz')
+            image, pose = load_data_npz('/content/drive/MyDrive/Columbia U/Advanced Project/Orientation NPZ/Hospital_Test_filtered.npz')
         elif test_db_name == _TEST_DB_HOSPITAL_NEW:
-            image, pose = load_data_npz('/content/drive/MyDrive/Columbia U/Advanced Project/Orientation NPZ/Hospital_New_Test.npz')
+            # image, pose = load_data_npz('/content/drive/MyDrive/Columbia U/Advanced Project/Orientation NPZ/Hospital_New_Test.npz')
+            image, pose = load_data_npz('/content/drive/MyDrive/Columbia U/Advanced Project/Orientation NPZ/Hospital_New_Test_filtered.npz')
         
         if train_db_name == _TRAIN_DB_300W_LP:
             # we only care the angle between [-99,99] and filter other angles
@@ -467,6 +469,14 @@ def main():
         yaw = pose_matrix[0]
         pitch = pose_matrix[1]
         roll = pose_matrix[2]
+
+        # filter: delete those bad images |yaw| > 45
+        # delete_index = [i for i in range(len(y_data)) if abs(p_data[i][0] - y_data[i][0]) > 45]
+        # image = np.delete(image, delete_index, 0)
+        # pose = np.delete(pose, delete_index, 0)
+        # np.savez(test_db_name + '_filtered.npz', image=np.array(image), pose=np.array(pose), img_size=64)
+
+        
         print('\033[92m' + '\n--------------------------------------------------------------------------------' + '\033[0m')
         print('\033[92m' + save_name+', '+test_db_name+'('+train_db_name+')'+', MAE = %3.3f, [yaw,pitch,roll] = [%3.3f, %3.3f, %3.3f]'%(MAE, yaw, pitch, roll) + '\033[0m')
         print('\033[92m' + '--------------------------------------------------------------------------------' + '\033[0m')
