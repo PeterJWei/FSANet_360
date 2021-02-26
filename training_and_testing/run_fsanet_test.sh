@@ -1,4 +1,4 @@
-KERAS_BACKEND=tensorflow python FSANET_test.py --model_type 15 --train_db 300W_LP
+# KERAS_BACKEND=tensorflow python FSANET_test.py --model_type 15 --train_db 300W_LP
 
 # KERAS_BACKEND=tensorflow python FSANET_test.py --model_type 15 --train_db ExtraPosePlus
 

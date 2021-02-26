@@ -67,7 +67,7 @@ def get_args():
     args = parser.parse_args()
     return args
 
-def main():
+def main(absYaw, distance):
     K.clear_session()
     K.set_learning_phase(0) # make sure its testing mode
     
@@ -83,7 +83,7 @@ def main():
     # elif train_db_name == _TRAIN_DB_BIWI:
     #     test_db_list = [_TEST_DB_BIWI]
     
-    test_db_list = [_TEST_DB_HOSPITAL, _TEST_DB_HOSPITAL_NEW]
+    test_db_list = [_TEST_DB_HOSPITAL]
 
     for test_db_name in test_db_list:
 
@@ -96,7 +96,7 @@ def main():
                 image, pose = load_data_npz('../data/BIWI_test.npz')
         elif test_db_name == _TEST_DB_HOSPITAL:
             # image, pose = load_data_npz('/content/drive/MyDrive/Columbia U/Advanced Project/Orientation NPZ/Hospital_Test.npz')
-            image, pose = load_data_npz('/content/drive/MyDrive/Columbia U/Advanced Project/Orientation NPZ/Hospital_Test_filtered.npz')
+            image, pose = load_data_npz('/content/drive/MyDrive/Columbia U/Advanced Project/Orientation NPZ/Hospital_Test/Hospital_Test_absYaw_{}_distance_{}.npz'.format(absYaw, distance))
         elif test_db_name == _TEST_DB_HOSPITAL_NEW:
             # image, pose = load_data_npz('/content/drive/MyDrive/Columbia U/Advanced Project/Orientation NPZ/Hospital_New_Test.npz')
             image, pose = load_data_npz('/content/drive/MyDrive/Columbia U/Advanced Project/Orientation NPZ/Hospital_New_Test_filtered.npz')
@@ -457,29 +457,39 @@ def main():
             outputs = Average()([x1,x2,x3])
             model = Model(inputs=inputs,outputs=outputs)
 
-        print('\033[94m' + 'x_data' + '\033[0m')
-        print(x_data)
+        # print('\033[94m' + 'x_data' + '\033[0m')
+        # print(x_data)
         p_data = model.predict(x_data)
-        print('\033[93m' + 'p_data' + '\033[0m')
-        print(p_data)
-        print('\033[92m' + 'y_data' + '\033[0m')
-        print(y_data)
+        # print('\033[93m' + 'p_data' + '\033[0m')
+        # print(p_data)
+        # print('\033[92m' + 'y_data' + '\033[0m')
+        # print(y_data)
         pose_matrix = np.mean(np.abs(p_data-y_data),axis=0)
         MAE = np.mean(pose_matrix)
         yaw = pose_matrix[0]
         pitch = pose_matrix[1]
         roll = pose_matrix[2]
 
-        # filter: delete those bad images |yaw| > 45
-        # delete_index = [i for i in range(len(y_data)) if abs(p_data[i][0] - y_data[i][0]) > 45]
-        # image = np.delete(image, delete_index, 0)
-        # pose = np.delete(pose, delete_index, 0)
-        # np.savez(test_db_name + '_filtered.npz', image=np.array(image), pose=np.array(pose), img_size=64)
+        # # filter: delete those bad images |yaw| > 45
+        # delete_index = [i for i in range(len(y_data)) if abs(p_data[i][0] - y_data[i][0]) > absYaw]
+        # image_filtered = np.delete(image, delete_index, 0)
+        # pose_filtered = np.delete(pose, delete_index, 0)
+        # np.savez('/content/drive/MyDrive/Columbia U/Advanced Project/Orientation NPZ/Hospital_Test/' + test_db_name + '_absYaw_{}_distance_{}.npz'.format(absYaw, distance), image=np.array(image_filtered), pose=np.array(pose_filtered), img_size=64)
 
         print('\nNumber of heads tested: ', len(y_data))
         print('\033[92m' + '\n--------------------------------------------------------------------------------' + '\033[0m')
         print('\033[92m' + save_name+', '+test_db_name+'('+train_db_name+')'+', MAE = %3.3f, [yaw,pitch,roll] = [%3.3f, %3.3f, %3.3f]'%(MAE, yaw, pitch, roll) + '\033[0m')
         print('\033[92m' + '--------------------------------------------------------------------------------' + '\033[0m')
 
-if __name__ == '__main__':    
-    main()
+        return train_db_name, 'Hospital_Test_absYaw_{}_distance_{}'.format(absYaw, distance), len(y_data), absYaw, distance, MAE, yaw, pitch, roll
+
+if __name__ == '__main__': 
+    import csv
+    distances = ['1', '1.5', '2', '2.5', '3', '3.5', '4', '4.5', '5', 'inf']
+    absYaws = [10, 20, 30, 40, 45, 50, 60, 70, 80, 90, 100]
+    with open('fsanet_evaluation_yaw_distance.csv', mode='w') as result_file:
+        result_writer = csv.writer(result_file, delimiter=',', quotechar=' ', quoting=csv.QUOTE_ALL)
+        result_writer.writerow(['Train DB', 'Test DB', 'Test Number', 'Within abs(yaw-diff)', 'Within distance meter', 'MAE', 'MAE-yaw', 'MAE-pitch', 'MAE-roll'])
+        for distance in distances:
+            for absYaw in absYaws:
+                result_writer.writerow(main(absYaw, distance))
